@@ -1,33 +1,30 @@
-
 from tkinter import *
 from tkinter import ttk
 from datetime import datetime
-import openpyxl  
 import pprint
-pp = pprint.PrettyPrinter(indent=4)
-import random
 import requests
-import urllib.request
-import time
 from bs4 import BeautifulSoup
-import folium
 from tkinter import filedialog
 from selenium import webdriver  
 from selenium.common.exceptions import NoSuchElementException  
 from selenium.webdriver.common.keys import Keys  
 from bs4 import BeautifulSoup
 import pandas as pd
+import os
+
+
+pp = pprint.PrettyPrinter(indent=4)
 df = pd.DataFrame()
 folder_name = []
 input_ico = []
-import os
 desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), '')
 folder_name.append(desktop)
-
 root = Tk()
 e = Entry(root,width = 100)
 var = IntVar()
 input_questions = []
+
+
 def sel():
     selection =  str(var.get())
     try:
@@ -39,11 +36,9 @@ def sel():
 R1 = Radiobutton(root, text="2014 mode", variable=var, value=3,
                   command=sel)
 R1.pack( anchor = W )
-
 R3 = Radiobutton(root, text="micro", variable=var, value=2,
                   command=sel)
 R3.pack( anchor = W)
-
 label = Label(root)
 label.pack()
 
@@ -58,8 +53,6 @@ def display_text():
     label.configure(text='Press Download')
     myButton['state'] = 'normal'
     
-
-
 label=Label(root, text="Enter Ico", font=("Courier 22 bold"))
 label.pack()
 
@@ -142,7 +135,6 @@ def myClick():
         soup = BeautifulSoup(browser.text,'html.parser')
         tables = soup.find_all('table')
         soup
-
         for z in range(1,62):
             lol = []
             i = 0
@@ -157,7 +149,6 @@ def myClick():
                         df2[str(z)] = lol
                     except:
                         continue
-
         df2 = df2.transpose()
 
         list_polozka = []
@@ -169,15 +160,12 @@ def myClick():
         except:
             pass
         names = [x.replace('\n','').replace('\r','') for x in list_polozka]
-
-
         i = 0
         years = []
         try:
             for x in range(0,20):
                 years.append(soup.findAll('th', {'class' : 'text-right'})[i].get_text())
                 i = i+1
-
         except:
             pass
         del df2[0]    
@@ -194,7 +182,6 @@ def myClick():
         soup = BeautifulSoup(browser.text,'html.parser')
         tables = soup.find_all('table')
         soup 
-
         for z in range(1,46):
             lol = []
             i = 0
@@ -208,7 +195,6 @@ def myClick():
                         df[str(z)] = lol
                     except:
                         continue
-
         df = df.transpose()
         list_polozka = []
         i = 0
@@ -219,8 +205,6 @@ def myClick():
         except:
             pass
         names = [x.replace('\n','').replace('\r','') for x in list_polozka]
-
-
         i = 0
         years = []
         try:
@@ -234,20 +218,16 @@ def myClick():
         years = [x.replace('\n','').replace('\r','').strip() for x in years]
         df.columns = years
         df.index = names
-       
         df2 = pd.DataFrame()
         url = 'https://www.finstat.sk/' + input_ico[-1] +  '/vykaz_ziskov_strat?as=micro_2014'
         browser = requests.get(url)  
         soup = BeautifulSoup(browser.text,'html.parser')
         tables = soup.find_all('table')
         soup
-
         for z in range(1,39):
             lol = []
             i = 0
             for x in soup.findAll('tr', {'data-id' : 'row-' + str(z)})[0].findAll(['td', {'class' : 'nowrap text-right' },{'class' : 'nowrap text-right negative' }]):
-
-
                 i = i+1
                 text = x.get_text()
                 lol.append(text.replace('\n','').replace('\r','').replace('\xa0', ''))
@@ -256,7 +236,6 @@ def myClick():
                         df2[str(z)] = lol
                     except:
                         continue
-
         df2 = df2.transpose()
         list_polozka = []
         i = 0
@@ -267,15 +246,12 @@ def myClick():
         except:
             pass
         names = [x.replace('\n','').replace('\r','') for x in list_polozka]
-
-
         i = 0
         years = []
         try:
             for x in range(0,20):
                 years.append(soup.findAll('th', {'class' : 'text-right'})[i].get_text())
                 i = i+1
-
         except:
             pass
         del df2[0]    
@@ -292,7 +268,6 @@ def myClick():
         soup = BeautifulSoup(browser.text,'html.parser')
         tables = soup.find_all('table')
         soup 
-
         for z in range(1,127):
             lol = []
             i = 0
@@ -308,7 +283,6 @@ def myClick():
                         df[str(z)] = lol
                     except:
                         continue
-
         df = df.transpose()
 
         list_polozka = []
@@ -335,15 +309,12 @@ def myClick():
         years = [x.replace('\n','').replace('\r','').strip() for x in years]
         df.columns = years
         df.index = names
-       
-
         df2 = pd.DataFrame()
         url = 'https://www.finstat.sk/' + input_ico[-1] +  '/vykaz_ziskov_strat'
         browser = requests.get(url)  
         soup = BeautifulSoup(browser.text,'html.parser')
         tables = soup.find_all('table')
         soup
-
         for z in range(1,63):
             lol = []
             i = 0
@@ -358,7 +329,6 @@ def myClick():
                         df2[str(z)] = lol
                     except:
                         continue
-
         df2 = df2.transpose()
     
         list_polozka = []
@@ -390,7 +360,6 @@ def myClick():
 
     def dfs_tabs(df_list, sheet_list, file_name):
         file_name = folder_name[-1] +'/' + str(input_ico[-1]) +'.xlsx'
-        ##tu este zmenit directory
         writer = pd.ExcelWriter(file_name,engine='xlsxwriter') 
         workbook  = writer.book
         sheet_name = "VZZ"
@@ -400,15 +369,11 @@ def myClick():
             dataframe.to_excel(writer, sheet_name=sheet, startrow=1 , startcol=0) 
 
         worksheet = writer.sheets[sheet_name]
-
-        
         worksheet = writer.sheets[sheet_name]
         worksheet.write(0, 0, 'Stiahnute z Finstatu    '+datetime.now().strftime('%d %b %Y'), workbook.add_format({'bold': True, 'color': '#E26B0A', 'size': 14}))
         worksheet = writer.sheets[sheet_name2]
         worksheet.write(0, 0, 'Stiahnute z Finstatu    '+datetime.now().strftime('%d %b %Y'), workbook.add_format({'bold': True, 'color': '#E26B0A', 'size': 14}))
         writer.save()
-        #writer.close()
-        ##writer.close()
     dfs = [df, df2]
     sheets = ['suvaha','VZZ']    
 
