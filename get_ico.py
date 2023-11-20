@@ -1,8 +1,5 @@
-from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
-
 
 last_page = 25000
 ico_list = []
