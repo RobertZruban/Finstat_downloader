@@ -7,7 +7,6 @@ table_name = "ico_numbers"
 database_name = "finstat"
 schema = 'dbo'
 conn = connect_database(database_name)
-date_today = '2023-11-21'
 
 for x in range(1,2):
     
@@ -25,7 +24,7 @@ for x in range(1,2):
                 ico_final = ico_final.strip()
                 formatted_date = f"'{date_today}'"
                 company_name = soup.find_all('a', {'class' : 'truncate openwindow'})[x].get_text()
-                query = f"INSERT INTO {schema}.{table_name} (ico,spolocnost, date) VALUES ('{ico_final}','{company_name}',{formatted_date})"
+                query = f"INSERT INTO {schema}.{table_name} (ico,spolocnost) VALUES ('{ico_final}','{company_name}')"
                 query_table(query, conn)
             except:
                 print("error")  
