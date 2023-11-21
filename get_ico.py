@@ -9,7 +9,7 @@ schema = 'dbo'
 conn = connect_database(database_name)
 date_today = '2023-11-21'
 
-for x in range(1,20):
+for x in range(1,2):
     
     url = 'https://finstat.sk/databaza-financnych-udajov?page=' + str(x)
     #print(url)
@@ -21,13 +21,14 @@ for x in range(1,20):
             try:
                 ico_substring = str(soup.findAll('a', {'class' : 'truncate openwindow'})[x])
                 ico_final = ico_substring[ico_substring.find('/')+1:ico_substring.find('/')+11]
-                ico_final = ico_final.strip()
                 ico_final = ico_final.replace('"','')
+                ico_final = ico_final.strip()
                 formatted_date = f"'{date_today}'"
-                query = f"INSERT INTO {schema}.{table_name} (ico, date) VALUES ('{ico_final}',{formatted_date})"
+                company_name = soup.find_all('a', {'class' : 'truncate openwindow'})[x].get_text()
+                query = f"INSERT INTO {schema}.{table_name} (ico,spolocnost, date) VALUES ('{ico_final}','{company_name}',{formatted_date})"
                 query_table(query, conn)
             except:
-                print("error")
+                print("error")  
                 
             
 
