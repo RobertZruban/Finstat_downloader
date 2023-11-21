@@ -22,7 +22,6 @@ for x in range(1,2):
                 ico_final = ico_substring[ico_substring.find('/')+1:ico_substring.find('/')+11]
                 ico_final = ico_final.replace('"','')
                 ico_final = ico_final.strip()
-                formatted_date = f"'{date_today}'"
                 company_name = soup.find_all('a', {'class' : 'truncate openwindow'})[x].get_text()
                 query = f"INSERT INTO {schema}.{table_name} (ico,spolocnost) VALUES ('{ico_final}','{company_name}')"
                 query_table(query, conn)
