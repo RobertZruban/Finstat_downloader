@@ -17,3 +17,18 @@ def query_table(query, conn):
     result = cursor.fetchall()  # Use fetchall() if the query returns results
     cursor.close()
     return result
+
+
+def get_ico_len(table_name = 'ico_numbers', database_name = 'finstat', schema = 'dbo'):
+    query = f"Select COUNT(*) AS COUNT from {database_name}.{schema}.{table_name}"
+    count_companies = pd.read_sql(query, connect_database(database_name))
+    return count_companies['COUNT'][0]
+    
+
+def get_ico_table(table_name = 'ico_numbers', database_name = 'finstat', schema = 'dbo', size = 1000000):
+    query = f"Select top({size}) * from {database_name}.{schema}.{table_name}"
+    table = pd.read_sql(query, connect_database(database_name))
+    return table
+    
+    
+    
