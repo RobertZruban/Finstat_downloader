@@ -13,8 +13,9 @@ schema = 'dbo'
 conn = connect_database(database_name)
 browser = finstat_login.login()
 
-
-for x in range(7000,last_page):
+# Start 1000
+# END 2080
+for x in range(1671,last_page):
 
     print(f"Starting {x} itertion")
     url = 'https://finstat.sk/databaza-financnych-udajov?page=' + str(x)
